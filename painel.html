@@ -3,323 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel - Colégio Estadual 14 de Dezembro</title>
+<title>Painel - Colégio Estadual</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0; padding: 0;
-  background-color: #006400;
-  color: #fff;
-}
-header {
-  text-align: center;
-  padding: 20px;
-  background-color: #004d00;
-}
-header img {
-  width: 90px;
-  vertical-align: middle;
-  margin-right: 10px;
-}
-header h1 {
-  display: inline-block;
-  font-size: 1.8em;
-  vertical-align: middle;
-  margin: 0;
-}
-.painel {
-  width: 85%;
-  max-width: 1000px;
-  margin: 30px auto;
-  background: #fff;
-  color: #000;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-}
-h2 {
-  text-align: center;
-  color: #006400;
-}
-.menu {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-.menu button {
-  background: #006400;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 20px;
-  margin: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.menu button:hover {
-  background: #008000;
-}
-.secao {
-  display: none;
-  background: #f4f4f4;
-  padding: 15px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-.ativo {
-  display: block;
-}
-input, textarea {
-  width: 100%;
-  margin: 5px 0 10px;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.btn {
-  background: #006400;
-  color: #fff;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 5px;
-}
-.btn:hover {
-  background: #008000;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-}
-th {
-  background: #006400;
-  color: #fff;
-}
-#logout {
-  background: #b30000;
-  margin-top: 20px;
-}
-#logout:hover {
-  background: #ff0000;
-}
+body {font-family: Arial, sans-serif; margin:0; padding:0; background-color:#006400; color:#fff;}
+header {text-align:center; padding:20px; background-color:#004d00;}
+header h1 {margin:0; font-size:1.8em;}
+.painel {width:90%; max-width:1000px; margin:20px auto; background:#fff; color:#000; padding:20px; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.3);}
+h2 {text-align:center; color:#006400;}
+.menu {display:flex; flex-wrap:wrap; justify-content:space-around; margin-bottom:20px;}
+.menu button {background:#006400; color:#fff; border:none; border-radius:6px; padding:10px 20px; margin:5px; cursor:pointer; font-weight:bold;}
+.menu button:hover {background:#008000;}
+.secao {display:none; background:#f4f4f4; padding:15px; border-radius:8px; margin-top:10px;}
+.ativo {display:block;}
+input, textarea, select {width:100%; margin:5px 0 10px; padding:8px; border-radius:5px; border:1px solid #ccc;}
+.btn {background:#006400; color:#fff; padding:8px 15px; border:none; border-radius:5px; cursor:pointer; margin-top:5px;}
+.btn:hover {background:#008000;}
+table {width:100%; border-collapse:collapse; margin-top:10px;}
+th, td {border:1px solid #ccc; padding:8px; text-align:center;}
+th {background:#006400; color:#fff;}
+#logout {background:#b30000; margin-top:20px;}
+#logout:hover {background:#ff0000;}
 </style>
 </head>
 <body>
 <header>
-  <img src="logo-colegio.png" alt="Logo Colégio Estadual 14 de Dezembro">
-  <h1>Colégio Estadual 14 de Dezembro - Rede Escola PR</h1>
+<h1>Colégio Estadual - Painel Administrativo</h1>
 </header>
 
 <div class="painel">
-<h2>Central de Impressão</h2>
+<h2>Central de Administração Escolar</h2>
 
 <div class="menu">
-  <button onclick="mostrarSecao('impressao')">🖨️ Pedidos de Impressão</button>
-  <button onclick="mostrarSecao('comunicados')">📢 Comunicados</button>
-  <button onclick="mostrarSecao('mensagens')">💬 Mensagens</button>
-  <button onclick="mostrarSecao('agenda')">📅 Agenda Escolar</button>
-  <button onclick="mostrarSecao('biblioteca')">📚 Biblioteca Digital</button>
-  <button onclick="mostrarSecao('financeiro')">💰 Financeiro</button>
-  <button onclick="mostrarSecao('config')">⚙️ Configurações</button>
+<button onclick="mostrarSecao('impressao')">🖨️ Pedidos de Impressão</button>
+<button onclick="mostrarSecao('comunicados')">📢 Comunicados</button>
+<button onclick="mostrarSecao('mensagens')">💬 Mensagens</button>
+<button onclick="mostrarSecao('agenda')">📅 Agenda Escolar</button>
+<button onclick="mostrarSecao('biblioteca')">📚 Biblioteca Digital</button>
+<button onclick="mostrarSecao('financeiro')">💰 Financeiro</button>
+<button onclick="mostrarSecao('config')">⚙️ Configurações</button>
 </div>
 
-<!-- IMPRESSÃO -->
+<!-- Impressão -->
 <div id="impressao" class="secao ativo">
-  <h3>Pedidos de Impressão</h3>
-  <input type="text" id="titulo" placeholder="Título do pedido">
-  <textarea id="descricao" placeholder="Descrição do pedido"></textarea>
-  <input type="file" id="arquivo" multiple>
-  <button class="btn" onclick="enviarPedido()">Enviar Pedido</button>
+<h3>Pedidos de Impressão</h3>
+<input type="text" id="titulo" placeholder="Título do pedido">
+<textarea id="descricao" placeholder="Descrição do pedido"></textarea>
+<input type="file" id="arquivo" multiple>
+<button class="btn" onclick="enviarPedido()">Enviar Pedido</button>
 
-  <h4>Lista de Pedidos</h4>
-  <table id="tabelaPedidos">
-    <tr>
-      <th>Título</th>
-      <th>Descrição</th>
-      <th>Status</th>
-      <th>Responsável</th>
-      <th>Data</th>
-      <th>Ações</th>
-    </tr>
-  </table>
+<h4>Lista de Pedidos</h4>
+<table id="tabelaPedidos">
+<tr>
+<th>Título</th><th>Descrição</th><th>Status</th><th>Responsável</th><th>Data</th><th>Ações</th>
+</tr>
+</table>
 </div>
 
-<!-- COMUNICADOS -->
+<!-- Comunicados -->
 <div id="comunicados" class="secao">
-  <h3>📢 Comunicados</h3>
-  <textarea id="comunicadoTexto" placeholder="Escreva um comunicado..."></textarea>
-  <button class="btn" onclick="publicarComunicado()">Publicar</button>
-  <ul id="listaComunicados"></ul>
+<h3>Comunicados</h3>
+<div id="listaComunicados"></div>
 </div>
 
-<!-- MENSAGENS -->
+<!-- Mensagens -->
 <div id="mensagens" class="secao">
-  <h3>💬 Mensagens Internas</h3>
-  <textarea id="mensagemTexto" placeholder="Digite uma mensagem..."></textarea>
-  <button class="btn" onclick="enviarMensagem()">Enviar</button>
-  <ul id="listaMensagens"></ul>
+<h3>Mensagens Internas</h3>
+<textarea id="msgTexto" placeholder="Digite uma mensagem..."></textarea>
+<button class="btn" onclick="enviarMensagem()">Enviar</button>
+<div id="historicoMensagens"></div>
 </div>
 
-<!-- AGENDA -->
-<div id="agenda" class="secao">
-  <h3>📅 Agenda Escolar</h3>
-  <input type="date" id="dataEvento">
-  <input type="text" id="tituloEvento" placeholder="Título do evento">
-  <button class="btn" onclick="adicionarEvento()">Adicionar Evento</button>
-  <ul id="listaEventos"></ul>
+<!-- Agenda -->
+<div id="agenda" class="secao"><h3>Agenda Escolar</h3><div id="calendario"></div></div>
+
+<!-- Biblioteca -->
+<div id="biblioteca" class="secao"><h3>Biblioteca Digital</h3><div id="listaMateriais"></div></div>
+
+<!-- Financeiro -->
+<div id="financeiro" class="secao"><h3>Financeiro</h3><div id="dadosFinanceiro"></div></div>
+
+<!-- Configurações -->
+<div id="config" class="secao"><h3>Configurações</h3></div>
+
+<button id="logout" class="btn" onclick="logout()">Sair</button>
 </div>
 
-<!-- BIBLIOTECA -->
-<div id="biblioteca" class="secao">
-  <h3>📚 Biblioteca Digital</h3>
-  <input type="file" id="arquivoBiblioteca" multiple>
-  <button class="btn" onclick="enviarArquivoBiblioteca()">Enviar</button>
-  <ul id="listaBiblioteca"></ul>
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.22.0/firebase-app.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.22.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.22.0/firebase-firestore.js";
 
-<!-- FINANCEIRO -->
-<div id="financeiro" class="secao">
-  <h3>💰 Financeiro</h3>
-  <input type="text" id="descricaoGasto" placeholder="Descrição do gasto">
-  <input type="number" id="valorGasto" placeholder="Valor (R$)">
-  <button class="btn" onclick="registrarGasto()">Registrar</button>
-  <ul id="listaGastos"></ul>
-</div>
+// Config Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAGqD_Ni_p8eS0P4W4CBSjhIYBRE9yC4VE",
+  authDomain: "ods-2b1cd.firebaseapp.com",
+  projectId: "ods-2b1cd",
+  storageBucket: "ods-2b1cd.appspot.com",
+  messagingSenderId: "35029031501",
+  appId: "1:35029031501:web:a5b47ef5c20d6fa993da04"
+};
 
-<!-- CONFIGURAÇÕES -->
-<div id="config" class="secao">
-  <h3>⚙️ Configurações</h3>
-  <button class="btn" onclick="alterarTema()">Alternar Tema</button>
-  <button id="logout" class="btn" onclick="logout()">Sair</button>
-</div>
-</div>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-<script>
-function mostrarSecao(id){
-  document.querySelectorAll('.secao').forEach(s=>s.classList.remove('ativo'));
-  document.getElementById(id).classList.add('ativo');
-}
+// Mostrar seções
+function mostrarSecao(id){ document.querySelectorAll('.secao').forEach(s=>s.classList.remove('ativo')); document.getElementById(id).classList.add('ativo'); }
 
-function enviarPedido(){
+// Logout
+window.logout = function(){ signOut(auth).then(()=>window.location.href="index.html"); }
+
+// Pedidos de impressão
+window.enviarPedido = async function(){
   const titulo=document.getElementById('titulo').value;
   const descricao=document.getElementById('descricao').value;
-  const arquivos=Array.from(document.getElementById('arquivo').files);
-  if(!titulo||!descricao){alert("Preencha título e descrição!");return;}
-  const tabela=document.getElementById('tabelaPedidos');
-  const tr=document.createElement('tr');
-  tr.files=arquivos;
-  const data=new Date().toLocaleString();
-  tr.innerHTML=`<td>${titulo}</td><td>${descricao}</td><td>Pendente</td><td>Funcionário</td><td>${data}</td><td>
-  <button onclick="aprovarPedido(this)">Aprovar</button>
-  <button onclick="marcarImpresso(this)">Impresso</button>
-  <button onclick="imprimirPedido(this)">Imprimir</button>
-  </td>`;
-  tabela.appendChild(tr);
-  document.getElementById('titulo').value='';
-  document.getElementById('descricao').value='';
-  document.getElementById('arquivo').value='';
+  const arquivos=document.getElementById('arquivo').files;
+  if(!titulo || !descricao){ alert("Preencha título e descrição"); return; }
+
+  try{
+    const docRef = await addDoc(collection(db,'pedidos'), {
+      titulo, descricao, status:'Pendente', responsavel:'Direção/Secretaria', data: serverTimestamp()
+    });
+    alert("Pedido enviado!");
+    document.getElementById('titulo').value=''; document.getElementById('descricao').value=''; document.getElementById('arquivo').value='';
+    carregarPedidos();
+  }catch(e){ alert("Erro: "+e.message); }
 }
 
-function aprovarPedido(btn){btn.parentElement.parentElement.cells[2].innerText="Aprovado";}
-function marcarImpresso(btn){btn.parentElement.parentElement.cells[2].innerText="Impresso";}
-
-function imprimirPedido(btn){
-  const linha=btn.parentElement.parentElement;
-  const arquivos=linha.files;
-  if(!arquivos||arquivos.length===0){alert("Nenhum arquivo enviado!");return;}
-  const janela=window.open('','_blank','width=800,height=600');
-  let conteudo="";
-  arquivos.forEach((file,index)=>{
-    if(file.type.startsWith("image/")){
-      const reader=new FileReader();
-      reader.onload=function(e){
-        conteudo+=`<img src="${e.target.result}" style="max-width:100%;margin-top:10px;">`;
-        if(index===arquivos.length-1){
-          janela.document.write('<html><body>'+conteudo+'</body></html>');
-          janela.document.close(); janela.print();
-        }
-      }
-      reader.readAsDataURL(file);
-    }else if(file.type==="application/pdf"){
-      conteudo+=`<embed src="${URL.createObjectURL(file)}" width="100%" height="500px">`;
-      if(index===arquivos.length-1){
-        janela.document.write('<html><body>'+conteudo+'</body></html>');
-        janela.document.close(); janela.print();
-      }
-    }else{
-      conteudo+=`<p><a href="${URL.createObjectURL(file)}" target="_blank">${file.name}</a></p>`;
-      if(index===arquivos.length-1){
-        janela.document.write('<html><body>'+conteudo+'</body></html>');
-        janela.document.close(); janela.print();
-      }
-    }
+// Carregar pedidos
+async function carregarPedidos(){
+  const tabela = document.getElementById('tabelaPedidos');
+  tabela.innerHTML=`<tr>
+<th>Título</th><th>Descrição</th><th>Status</th><th>Responsável</th><th>Data</th><th>Ações</th>
+</tr>`;
+  const querySnapshot = await getDocs(collection(db,'pedidos'));
+  querySnapshot.forEach(docu=>{
+    const data = docu.data();
+    const tr = document.createElement('tr');
+    tr.innerHTML=`<td>${data.titulo}</td><td>${data.descricao}</td><td>${data.status}</td><td>${data.responsavel}</td><td>${data.data?.toDate().toLocaleString() || ''}</td>
+    <td>
+      <button onclick="aprovarPedido(this)">Aprovar</button>
+      <button onclick="marcarImpresso(this)">Impresso</button>
+    </td>`;
+    tabela.appendChild(tr);
   });
 }
+window.onload = carregarPedidos;
 
-function publicarComunicado(){
-  const texto=document.getElementById('comunicadoTexto').value;
-  if(!texto)return;
-  const li=document.createElement('li');
-  li.textContent=`${new Date().toLocaleString()} - ${texto}`;
-  document.getElementById('listaComunicados').appendChild(li);
-  document.getElementById('comunicadoTexto').value='';
-}
-
-function enviarMensagem(){
-  const texto=document.getElementById('mensagemTexto').value;
-  if(!texto)return;
-  const li=document.createElement('li');
-  li.textContent=`${new Date().toLocaleTimeString()} - ${texto}`;
-  document.getElementById('listaMensagens').appendChild(li);
-  document.getElementById('mensagemTexto').value='';
-}
-
-function adicionarEvento(){
-  const data=document.getElementById('dataEvento').value;
-  const titulo=document.getElementById('tituloEvento').value;
-  if(!data||!titulo)return;
-  const li=document.createElement('li');
-  li.textContent=`${data} - ${titulo}`;
-  document.getElementById('listaEventos').appendChild(li);
-  document.getElementById('dataEvento').value='';
-  document.getElementById('tituloEvento').value='';
-}
-
-function enviarArquivoBiblioteca(){
-  const arquivos=Array.from(document.getElementById('arquivoBiblioteca').files);
-  const lista=document.getElementById('listaBiblioteca');
-  arquivos.forEach(file=>{
-    const li=document.createElement('li');
-    li.innerHTML=`<a href="${URL.createObjectURL(file)}" target="_blank">${file.name}</a>`;
-    lista.appendChild(li);
-  });
-}
-
-function registrarGasto(){
-  const desc=document.getElementById('descricaoGasto').value;
-  const val=document.getElementById('valorGasto').value;
-  if(!desc||!val)return;
-  const li=document.createElement('li');
-  li.textContent=`${new Date().toLocaleDateString()} - ${desc} - R$ ${parseFloat(val).toFixed(2)}`;
-  document.getElementById('listaGastos').appendChild(li);
-  document.getElementById('descricaoGasto').value='';
-  document.getElementById('valorGasto').value='';
-}
-
-function alterarTema(){
-  document.body.style.backgroundColor=(document.body.style.backgroundColor==='#fff')?'#006400':'#fff';
-  document.body.style.color=(document.body.style.color==='#000')?'#fff':'#000';
-}
-
-function logout(){alert("Logout efetuado!");}
+// Funções aprovar e marcar impresso
+window.aprovarPedido = function(btn){ btn.parentElement.parentElement.cells[2].innerText="Aprovado"; }
+window.marcarImpresso = function(btn){ btn.parentElement.parentElement.cells[2].innerText="Impresso"; }
 </script>
 </body>
 </html>

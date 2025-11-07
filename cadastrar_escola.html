@@ -1,55 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cadastrar Escola</title>
 <style>
-  body{font-family:Arial,Helvetica,sans-serif;background:#006400;color:#fff;margin:0;display:flex;align-items:center;justify-content:center;height:100vh}
-  .box{background:#fff;color:#000;padding:22px;border-radius:12px;width:420px;box-shadow:0 6px 18px rgba(0,0,0,.15)}
-  h2{color:#006400;margin:0 0 12px}
-  input,select,button{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ccc}
-  button{background:#006400;color:#fff;border:0;cursor:pointer}
-  small{color:#666}
+body {font-family: Arial,sans-serif; background-color:#006400; color:#fff; margin:0; padding:0; display:flex; justify-content:center; align-items:center; height:100vh;}
+.container {background:#fff; color:#000; padding:30px; border-radius:12px; width:450px; box-shadow:0 0 15px rgba(0,0,0,0.3);}
+h2{text-align:center;color:#006400;}
+input, select {width:100%; padding:8px; margin:5px 0 10px; border-radius:5px; border:1px solid #ccc;}
+button{background:#006400; color:#fff; padding:10px 15px; border:none; border-radius:5px; cursor:pointer; margin-top:5px;}
+button:hover{background:#008000;}
 </style>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAGqD_Ni_p8eS0P4W4CBSjhIYBRE9yC4VE",
+  authDomain: "sdgs-2b1cd.firebaseapp.com",
+  projectId: "sdgs-2b1cd",
+  storageBucket: "sdgs-2b1cd.appspot.com",
+  messagingSenderId: "35029031501",
+  appId: "1:35029031501:web:a5b47ef5c20d6fa993da04"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.cadastrarEscola = async () => {
+  const nomeEscola = document.getElementById('nomeEscola').value;
+  const cidade = document.getElementById('cidade').value;
+  const nre = document.getElementById('nre').value;
+  const diretor = document.getElementById('diretor').value;
+  const vice = document.getElementById('vice').value;
+
+  if(!nomeEscola || !cidade || !nre || !diretor || !vice){ alert("Preencha todos os campos!"); return; }
+
+  try{
+    await addDoc(collection(db,"escolas"),{
+      nomeEscola, cidade, nre, diretor, vice
+    });
+    alert("Escola cadastrada com sucesso!");
+    window.location.href="index.html";
+  }catch(e){ alert(e.message); }
+}
+</script>
 </head>
 <body>
-  <div class="box">
-    <h2>📚 Cadastrar Escola</h2>
-
-    <input id="schoolName" placeholder="Nome da Escola" />
-    <input id="city" placeholder="Cidade (escreva ou escolha)" list="cities" />
-    <datalist id="cities">
-      <!-- Para economia coloquei algumas cidades; adicione as que quiser -->
-      <option>Curitiba</option>
-      <option>Maringá</option>
-      <option>Cascavel</option>
-      <option>Ponta Grossa</option>
-      <option>Foz do Iguaçu</option>
-      <option>Campo Mourão</option>
-      <option>Paranavaí</option>
-      <option>Apucarana</option>
-      <option>Toledo</option>
-      <option>Guarapuava</option>
-      <option>Peabiru</option>
-      <!-- você pode editar e adicionar a lista completa das cidades do Paraná -->
-    </datalist>
-
-    <select id="nucleo">
-      <option value="">Selecione o Núcleo Regional</option>
-      <option>NRE/Curitiba</option>
-      <option>NRE/Maringá</option>
-      <option>NRE/Cascavel</option>
-      <option>NRE/Ponta Grossa</option>
-      <option>NRE/Foz do Iguaçu</option>
-      <option>NRE/Campo Mourão</option>
-      <option>NRE/Paranavaí</option>
-      <option>NRE/Apucarana</option>
-      <option>NRE/Toledo</option>
-      <option>NRE/Guarapuava</option>
-      <option>NRE/Peabiru</option>
-      <!-- se quiser posso gerar a lista completa dos Núcleos; por enquanto tem exemplos -->
-    </select>
-
-    <input id="diretora" placeholder="Nome da Diretora(a)" />
-    <input id="vice" placeholder="Nome do(a) Vice
+<div class="container">
+<h2>Cadastrar Escola</h2>
+<input type="text" id="nomeEscola" placeholder="Nome da Escola">
+<select id="cidade">
+  <option value="">Selecione a cidade</option>
+  <option>Curitiba</option>
+  <option>Londrina</option>
+  <option>Maringá</option>
+  <option>Foz do Iguaçu</option>
+  <option>Ponta Grossa</option>
+  <option>... (adicione todas do Paraná)</option>
+</select>
+<select id="nre">
+  <option value="">Selecione o Núcleo Regional de Educação</option>
+  <option>Curitiba</option>
+  <option>Londrina</option>
+  <option>Maringá</option>
+  <option>Ponta Grossa</option>
+  <option>Foz do Iguaçu</option>
+  <option>... (adicione todos)</option>
+</select>
+<input type="text" id="diretor" placeholder="Nome do Diretor">
+<input type="text" id="vice" placeholder="Nome do Vice-Diretor">
+<button onclick="cadastrarEscola()">Cadastrar Escola</button>
+</div>
+</body>
+</html>
