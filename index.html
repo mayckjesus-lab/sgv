@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Painel Escolar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #006400, #004d00);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .caixa {
+      background: white;
+      color: #000;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      width: 320px;
+      text-align: center;
+    }
+    h2 {
+      color: #006400;
+      margin-bottom: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #006400;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #008000;
+    }
+    a {
+      color: #006400;
+      text-decoration: none;
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="caixa" id="loginBox">
+    <h2>Entrar no Painel</h2>
+    <input type="email" id="emailLogin" placeholder="E-mail @escola.pr.gov.br">
+    <input type="password" id="senhaLogin" placeholder="Senha">
+    <button onclick="login()">Entrar</button>
+    <a href="#" onclick="mostrarCadastro()">Cadastrar Escola</a>
+  </div>
+
+  <div class="caixa" id="cadastroBox" style="display:none;">
+    <h2>Cadastrar Escola</h2>
+    <input type="text" id="nomeCompleto" placeholder="Nome completo">
+    <input type="email" id="emailCadastro" placeholder="E-mail @escola.pr.gov.br">
+    <input type="password" id="senhaCadastro" placeholder="Senha">
+    <input type="text" id="nomeEscola" placeholder="Nome da Escola">
+    <select id="cargo">
+      <option value="">Selecione o Cargo</option>
+      <option>Direção</option>
+      <option>Secretaria</option>
+      <option>Professor</option>
+      <option>Pedagógico</option>
+      <option>Financeiro</option>
+      <option>Impressão</option>
+      <option>Portaria</option>
+      <option>Limpeza</option>
+      <option>Técnico</option>
+      <option>Estagiário</option>
+    </select>
+    <button onclick="cadastrar()">Cadastrar</button>
+    <a href="#" onclick="mostrarLogin()">Voltar ao Login</a>
+  </div>
+
+  <script>
+    function mostrarCadastro() {
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('cadastroBox').style.display = 'block';
+    }
+
+    function mostrarLogin() {
+      document.getElementById('cadastroBox').style.display = 'none';
+      document.getElementById('loginBox').style.display = 'block';
+    }
+
+    function cadastrar() {
+      const nome = document.getElementById('nomeCompleto').value;
+      const email = document.getElementById('emailCadastro').value;
+      const senha = document.getElementById('senhaCadastro').value;
+      const escola = document.getElementById('nomeEscola').value;
+      const cargo = document.getElementById('cargo').value;
+
+      if (!email.endsWith("@escola.pr.gov.br")) {
+        alert("Use um e-mail institucional (@escola.pr.gov.br)");
+        return;
+      }
+      if (!nome || !senha || !escola || !cargo) {
+        alert("Preencha todos os campos!");
+        return;
+      }
+
+      localStorage.setItem('usuario', JSON.stringify({ nome, email, senha, escola, cargo }));
+      alert("Cadastro realizado com sucesso!");
+      mostrarLogin();
+    }
+
+    function login() {
+      const email = document.getElementById('emailLogin').value;
+      const senha = document.getElementById('senhaLogin').value;
+      const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+      if (!usuario || usuario.email !== email || usuario.senha !== senha) {
+        alert("E-mail ou senha incorretos!");
+        return;
+      }
+
+      localStorage.setItem('logado', JSON.stringify(usuario));
+      window.location.href = "painel.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Interno - Portal Escolar PR</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h2 id="schoolName"></h2>
+    <button id="logoutBtn">Sair</button>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <h3>Bem-vindo(a), <span id="userName"></span>!</h3>
+      <p>Cargo: <span id="userRole"></span></p>
+    </section>
+
+    <section class="panel">
+      <h3>📄 Pedidos de Impressão</h3>
+      <form id="printForm">
+        <input type="text" id="printTitle" placeholder="Título da atividade" required>
+        <textarea id="printDesc" placeholder="Descrição" required></textarea>
+        <input type="file" id="printFile" accept=".pdf,.docx,.pptx,.xlsx,.jpg,.png" required>
+        <button type="submit">Enviar pedido</button>
+      </form>
+
+      <div id="printList"></div>
+    </section>
+
+    <section class="panel">
+      <h3>📢 Comunicados</h3>
+      <div id="commList"></div>
+      <div id="commCreate" style="display:none;">
+        <textarea id="commText" placeholder="Escreva o comunicado"></textarea>
+        <button id="sendComm">Enviar comunicado</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3>⚙️ Configurações</h3>
+      <button id="changeSchool" style="display:none;">Trocar nome da escola</button>
+      <button id="changePass">Alterar senha</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

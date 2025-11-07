@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Login / Cadastro - Escola</title>
+<style>
+  body{font-family:Arial;margin:0;background:#006400;color:#fff}
+  .box{max-width:420px;margin:80px auto;background:#fff;color:#000;padding:20px;border-radius:10px}
+  input,select,button{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc}
+  button{background:#006400;color:#fff;border:0;cursor:pointer}
+  button.alt{background:#004d00}
+  small{display:block;color:#666;margin-top:6px}
+  #status{height:20px;color:red;text-align:center}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2 style="color:#006400;text-align:center">Login / Cadastro</h2>
+
+  <input id="fullName" placeholder="Nome completo" />
+  <input id="schoolName" placeholder="Nome da escola" />
+  <select id="cargo">
+    <option value="">Selecione seu cargo</option>
+    <option>Direção</option><option>Secretaria</option><option>Professor</option>
+    <option>Pedagógico</option><option>Financeiro</option><option>Impressão</option>
+    <option>Portaria</option><option>Limpeza</option><option>Técnico</option><option>Estagiário</option>
+  </select>
+
+  <input id="email" type="email" placeholder="E-mail (somente @escola.pr.gov.br)" />
+  <input id="password" type="password" placeholder="Senha" />
+
+  <button id="btnRegister">Cadastrar</button>
+  <button id="btnLogin" class="alt">Entrar</button>
+  <button id="btnRegisterSchool" style="margin-top:10px">Cadastrar Escola</button>
+
+  <div id="status"></div>
+  <small>Obs: só aceita e-mails terminados em <b>@escola.pr.gov.br</b>.</small>
+</div>
+
+<script type="module">
+/* Appwrite client - usa o Project ID que você passou */
+import { Client, Account } from 'https://cdn.jsdelivr.net/npm/appwrite@8.6.1/dist/appwrite.min.mjs';
+
+const client = new Client()
+  .setEndpoint('https://cloud.appwrite.io/v1') // se o seu endpoint for outro, troque aqui
+  .setProject('690d33370005eb01a6e2'); // <- seu Project ID
+
+const account = new Account(client);
+
+const $ = id => document.getElementById(id);
+const status = $('status');
+
+function setStatus(t, color='red'){ status.style.color = color; status.innerText = t; setTimeout(()=>status.innerText='',5000); }
+
+// Criar conta
+$('btnRegister').addEventListener('click', async ()=>{
+  const name = $('fullName').value.trim();
+  const school = $('schoolName').value.trim();
+  const role = $('cargo').value;
+  const email = $('email').value.trim();
+  const pass = $('password').value;
+
+  if(!name || !school || !role || !email || !pass){ setStatus('Preencha todos os campos'); return; }
+  if(!email.endsWith('@escola.pr.gov.br')){ setStatus('Use um e-mail @escola.pr.gov.br'); return; }
+
+  setStatus('Criando conta...', 'black');
+  try{
+    // Appwrite create user + session: create() cria a conta e envia email (se ativado)
+    // Usamos account.create para criar o usuário (id = unique())
+    await account.create('unique()', email, pass, name);
+    // em Appwrite muitas vezes é preciso criar session após criar: (auto login)
+    await account.createSession(email, pass);
+    // Salvar dados extras (nome, escola, cargo) na collection "users" via endpoint REST
+    // Como não usamos Functions aqui, vamos guardar no localStorage e deixar painel salvar no DB (ou criar uma collection pública)
+    localStorage.setItem('app_user_profile', JSON.stringify({name, school, role, email}));
+    setStatus('Conta criada. Redirecionando...', 'green');
+    setTimeout(()=>location.href='register-school.html',800);
+  }catch(err){
+    setStatus('Erro: '+ (err.message || err.toString()));
+  }
+});
+
+// Login
+$('btnLogin').addEventListener('click', async ()=>{
+  const email = $('email').value.trim();
+  const pass = $('password').value;
+  if(!email || !pass){ setStatus('Preencha e-mail e senha'); return; }
+  if(!email.endsWith('@escola.pr.gov.br')){ setStatus('Use um e-mail @escola.pr.gov.br'); return; }
+  setStatus('Entrando...', 'black');
+  try{
+    await account.createSession(email, pass);
+    setStatus('Logado! Redirecionando...', 'green');
+    setTimeout(()=>location.href='painel.html',500);
+  }catch(err){
+    setStatus('Erro: '+ (err.message || err.toString()));
+  }
+});
+
+// Botão cadastrar escola (vai pra página com mesmo estilo)
+$('btnRegisterSchool').addEventListener('click', ()=> location.href='register-school.html');
+
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Cadastrar Escola</title>
+<style>body{font-family:Arial;margin:0;background:#006400;color:#fff}.box{max-width:420px;margin:80px auto;background:#fff;color:#000;padding:20px;border-radius:10px}input,button{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc}button{background:#006400;color:#fff;border:0}</style>
+</head>
+<body>
+<div class="box">
+  <h2 style="color:#006400;text-align:center">Cadastrar Escola</h2>
+  <input id="schoolName" placeholder="Nome da escola" />
+  <input id="address" placeholder="Endereço" />
+  <input id="logo" type="file" accept="image/*" />
+  <button id="btnSave">Salvar Escola</button>
+  <div id="status"></div>
+</div>
+
+<script type="module">
+import { Client, Account, Storage } from 'https://cdn.jsdelivr.net/npm/appwrite@8.6.1/dist/appwrite.min.mjs';
+
+const client = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject('690d33370005eb01a6e2');
+const account = new Account(client);
+const storage = new Storage(client);
+
+const $ = id => document.getElementById(id);
+const status = $('status');
+function setStatus(t,c='red'){ status.style.color=c; status.innerText=t; setTimeout(()=>status.innerText='',4000); }
+
+async function requireAuth(){
+  try{
+    await account.get(); // testa sessão
+  }catch(e){
+    setStatus('Não autenticado. Volte para login.');
+    setTimeout(()=>location.href='login.html',1200);
+    throw e;
+  }
+}
+await requireAuth();
+
+$('btnSave').addEventListener('click', async ()=>{
+  const name = $('schoolName').value.trim();
+  const address = $('address').value.trim();
+  const fileInput = $('logo');
+  if(!name){ setStatus('Informe o nome da escola'); return; }
+  setStatus('Salvando...', 'black');
+
+  try{
+    let logoUrl = '';
+    if(fileInput.files && fileInput.files[0]){
+      // bucketId assumed: "arquivos" (crie esse bucket no painel Appwrite)
+      const res = await storage.createFile('arquivos', 'unique()', fileInput.files[0]);
+      // obter url público (dependendo das regras do bucket)
+      logoUrl = storage.getFileDownload('arquivos', res.$id).then(r=>r).catch(()=>null);
+      // Note: getFileDownload returns a promise for response, but Appwrite SDK may deliver file metadata.
+      // To keep simples, salvar $id e usar download link no painel, ou configurar bucket público.
+    }
+    // gravar informação local (você pode querer salvar em uma collection 'schools' via servidoreside)
+    localStorage.setItem('school_info', JSON.stringify({name,address,logoId: fileInput.files[0] ? fileInput.files[0].name : ''}));
+    setStatus('Escola cadastrada! Voltando ao painel...', 'green');
+    setTimeout(()=>location.href='painel.html',700);
+  }catch(err){
+    setStatus('Erro: '+(err.message||err.toString()));
+  }
+});
+</script>
+</body>
+</html>

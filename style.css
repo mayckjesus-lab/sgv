@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #006400; /* verde bandeira */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: white;
+  color: #004d00;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  padding: 30px;
+  width: 350px;
+}
+
+.logo {
+  width: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+input, select {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  background-color: #006400;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+button.secundario {
+  background-color: #008000;
+}
+
+button:hover {
+  background-color: #004d00;
+}
+
+#msg {
+  margin-top: 10px;
+  color: red;
+}

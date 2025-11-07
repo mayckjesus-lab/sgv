@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel - Colégio Estadual</title>
+  <style>
+    body {font-family: Arial, sans-serif; margin:0; padding:0; background-color:#006400; color:#fff;}
+    header {text-align:center; padding:20px; background-color:#004d00;}
+    header img {width:90px; vertical-align:middle; margin-right:10px;}
+    header h1 {display:inline-block; font-size:1.8em; vertical-align:middle; margin:0;}
+    .painel {width:85%; max-width:1000px; margin:30px auto; background:#fff; color:#000; padding:25px; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.3);}
+    h2 {text-align:center; color:#006400;}
+    .menu {display:flex; flex-wrap:wrap; justify-content:space-around; margin-bottom:20px;}
+    .menu button {background:#006400; color:#fff; border:none; border-radius:6px; padding:10px 20px; margin:5px; cursor:pointer; font-weight:bold;}
+    .menu button:hover {background:#008000;}
+    .secao {display:none; background:#f4f4f4; padding:15px; border-radius:8px; margin-top:10px;}
+    .ativo {display:block;}
+    #logout {background:#b30000; margin-top:20px;}
+    #logout:hover {background:#ff0000;}
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo-colegio.png" alt="Logo Escola">
+    <h1 id="tituloPainel">Painel Escolar</h1>
+  </header>
+
+  <div class="painel">
+    <h2 id="bemVindo"></h2>
+    <div class="menu">
+      <button onclick="mostrarSecao('impressao')">🖨️ Impressão</button>
+      <button onclick="mostrarSecao('comunicados')">📢 Comunicados</button>
+      <button onclick="mostrarSecao('mensagens')">💬 Mensagens</button>
+    </div>
+
+    <div id="impressao" class="secao ativo"><h3>Central de Impressão</h3></div>
+    <div id="comunicados" class="secao"><h3>Comunicados Internos</h3></div>
+    <div id="mensagens" class="secao"><h3>Mensagens</h3></div>
+
+    <button id="logout" onclick="logout()">Sair</button>
+  </div>
+
+  <script>
+    const usuario = JSON.parse(localStorage.getItem('logado'));
+    if (!usuario) window.location.href = "index.html";
+
+    document.getElementById('tituloPainel').innerText = usuario.escola;
+    document.getElementById('bemVindo').innerText = `Bem-vindo, ${usuario.nome} (${usuario.cargo})`;
+
+    function mostrarSecao(id){
+      document.querySelectorAll('.secao').forEach(s=>s.classList.remove('ativo'));
+      document.getElementById(id).classList.add('ativo');
+    }
+
+    function logout(){
+      localStorage.removeItem('logado');
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

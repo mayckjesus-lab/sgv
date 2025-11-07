@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Funcionário</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <img src="assets/logo.png" class="logo" alt="Logo">
+    <h2>Colégio Estadual 14 de Dezembro E.F.M.E</h2>
+    <button onclick="sair()">Sair</button>
+  </header>
+
+  <main class="painel">
+    <h3>Enviar arquivo para impressão</h3>
+    <input type="file" id="arquivo" multiple>
+    <textarea id="observacao" placeholder="Observações (quantidade, tipo de papel...)"></textarea>
+    <button onclick="enviarArquivo()">Enviar</button>
+  </main>
+
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
